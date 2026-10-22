@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>GLITCH RUN</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="wrap">
+  <canvas id="game" width="800" height="450"></canvas>
+  <button id="pauseBtn" class="hidden" data-action="pause">II</button>
+  <button id="dropBtn" class="hidden" data-action="drop" aria-label="Fast Drop">v</button>
+
+  <section id="menu" class="screen">
+    <h1>GLITCH RUN</h1>
+    <p>Escape the simulation.</p>
+    <p>Best: <b id="menuBest">0</b> &nbsp; Coins: <b id="menuCoins">0</b></p>
+    <div id="menuNotes" class="notes" aria-live="polite"></div>
+    <button data-action="start">PLAY</button>
+    <div class="grid">
+      <button data-action="shop">SHOP</button>
+      <button data-action="missions">MISSIONS</button>
+      <button data-action="achievements">ACHIEVEMENTS</button>
+      <button data-action="settings">SETTINGS</button>
+    </div>
+    <small>Jump: Space / W / Up / tap &nbsp; Drop: Down Arrow / S &nbsp; Pause: P / Esc</small>
+  </section>
+
+  <section id="pause" class="screen hidden">
+    <h2>PAUSED</h2>
+    <button data-action="resume">RESUME</button>
+    <button data-action="start">RESTART</button>
+    <button data-action="menu">MENU</button>
+  </section>
+
+  <section id="settings" class="screen hidden" aria-label="Settings">
+    <h2>SETTINGS</h2>
+    <div class="settings-grid">
+      <button class="toggle" data-setting="sfx"></button>
+      <button class="toggle" data-audio="sfxVol"></button>
+      <button class="toggle" data-audio="music"></button>
+      <button class="toggle" data-audio="musicVol"></button>
+      <button class="toggle" data-setting="shake"></button>
+      <button class="toggle" data-setting="reduceMotion"></button>
+    </div>
+    <small>Independent audio controls and visual comfort settings.</small>
+    <button data-action="menu">BACK TO MENU</button>
+  </section>
+
+  <section id="shop" class="screen page hidden" aria-label="Shop">
+    <header><h2>SHOP</h2><div class="coins">COINS: <b id="shopCoins">0</b></div></header>
+    <div class="shopbody">
+      <div class="previewbox">
+        <canvas id="shopPreview" width="240" height="130" role="img" aria-label="Preview of the selected skin and trail"></canvas>
+        <div id="previewName" class="pname"></div>
+        <small>Cosmetic only - no gameplay advantage.</small>
+      </div>
+      <div class="list" id="shopList" role="list" tabindex="0" aria-label="Shop items"></div>
+    </div>
+    <div id="shopMsg" class="msg" role="status" aria-live="polite"></div>
+    <button data-action="menu">BACK TO MENU</button>
+    <div id="shopConfirm" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="confirmText">
+      <p id="confirmText"></p>
+      <div class="row"><button id="confirmOk" data-shop="confirm">CONFIRM</button><button data-shop="cancel">CANCEL</button></div>
+    </div>
+  </section>
+
+  <section id="achievements" class="screen page hidden" aria-label="Achievements">
+    <header><h2>ACHIEVEMENTS</h2><div class="coins" id="achSummary"></div></header>
+    <div class="list" id="achList" role="list" tabindex="0" aria-label="Achievements"></div>
+    <button data-action="menu">BACK TO MENU</button>
+  </section>
+
+  <section id="missions" class="screen page hidden" aria-label="Daily missions">
+    <header><h2>DAILY MISSIONS</h2><div class="coins">COINS: <b id="missCoins">0</b></div></header>
+    <p id="missDay" class="msg"></p>
+    <div class="list" id="missList" role="list" tabindex="0" aria-label="Daily missions"></div>
+    <small>Missions are generated from your local date on this device and refresh at local midnight.</small>
+    <button data-action="menu">BACK TO MENU</button>
+  </section>
+
+  <section id="over" class="screen hidden">
+    <h2>SYSTEM FAILURE</h2>
+    <p>Score: <b id="overScore">0</b> <span id="newBest" class="hidden">NEW BEST!</span></p>
+    <p>Best: <b id="overBest">0</b> &nbsp; Fragments: <b id="overFrags">0</b></p>
+    <div id="overNotes" class="notes" aria-live="polite"></div>
+    <button data-action="start">RETRY</button>
+    <button data-action="menu">MENU</button>
+  </section>
+</div>
+<script src="js/config.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/input.js"></script>
+<script src="js/player.js"></script>
+<script src="js/world.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/powerups.js"></script>
+<script src="js/events.js"></script>
+<script src="js/cosmetics.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/game.js"></script>
+<script src="js/screens.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
