@@ -4,8 +4,20 @@ GR.Game = (function () {
   let ctx, player, world, state = 'menu', last = 0, score = 0, frags = 0, newBest = false, onState = null, runActive = false;
   let dead = false, bestAtStart = 0, visT = 0, shake = 0, shX = 0, shY = 0, veilA = 0, veilRate = 0, veilCol = '5,5,15';
   let stars = [], gBg, gGlow, gVig, notice = null, barsDrawn = 0, runTime = 0, lastNotes = null;
+  let canvasResizeObserver = null;
   const FONT = '"Courier New", monospace';
   const reduced = function () { return !!S.get('reduceMotion'); };
+
+  function resizeCanvas(canvas) {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
+    const width = Math.max(1, Math.round(rect.width * dpr));
+    const height = Math.max(1, Math.round(rect.height * dpr));
+    if (canvas.width !== width) canvas.width = width;
+    if (canvas.height !== height) canvas.height = height;
+    // Drawing remains in the game's 800x450 logical coordinate space; only the backing buffer changes.
+    ctx.setTransform(canvas.width / C.W, 0, 0, canvas.height / C.H, 0, 0);
+  }
 
   function info() { return { score: score, frags: frags, best: S.get('highScore'), coins: S.get('coins'), newBest: newBest, notes: lastNotes }; }
   function setState(s) {
@@ -16,6 +28,12 @@ GR.Game = (function () {
 
   function init(canvas, cb) {
     ctx = canvas.getContext('2d'); onState = cb;
+    resizeCanvas(canvas);
+    if (window.ResizeObserver) {
+      canvasResizeObserver = new ResizeObserver(function () { resizeCanvas(canvas); });
+      canvasResizeObserver.observe(canvas);
+    } else addEventListener('resize', function () { resizeCanvas(canvas); });
+    addEventListener('orientationchange', function () { resizeCanvas(canvas); });
     player = new GR.Player(); world = new GR.World(); world.onSpawn = GR.Power.onSpawn;
     GR.Events.onStart = function (id) { GR.Progress.noteEvent(id); };
     GR.Cosmetics.setPreviewCanvas(document.getElementById('shopPreview'));

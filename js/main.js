@@ -3,6 +3,17 @@
   const $ = function (id) { return document.getElementById(id); };
   const screens = { menu: $('menu'), paused: $('pause'), over: $('over'), settings: $('settings'), shop: $('shop'), achievements: $('achievements'), missions: $('missions') };
   const LABELS = { sfx: 'SOUND EFFECTS', shake: 'SCREEN SHAKE', reduceMotion: 'REDUCED MOTION' };
+  const fullscreenBtn = $('fullscreenBtn');
+  const wrap = $('wrap');
+
+  function updateFullscreenButton() {
+    if (!fullscreenBtn) return;
+    const active = document.fullscreenElement === wrap;
+    fullscreenBtn.textContent = active ? 'EXIT FULLSCREEN' : 'FULLSCREEN';
+    fullscreenBtn.setAttribute('aria-label', active ? 'Exit fullscreen' : 'Enter fullscreen');
+    fullscreenBtn.title = active ? 'Exit fullscreen' : 'Enter fullscreen';
+    fullscreenBtn.classList.toggle('hidden', !document.fullscreenEnabled || !wrap.requestFullscreen);
+  }
 
   function renderSettings() {
     document.querySelectorAll('[data-setting]').forEach(function (b) {
@@ -45,6 +56,12 @@
     const btn = e.target.closest('button[data-action],button[data-setting],button[data-audio],button[data-shop]');
     if (!btn) return;
     btn.blur();   // stops Space re-triggering the focused button
+    if (btn.dataset.action === 'fullscreen') {
+      if (document.fullscreenElement === wrap) {
+        if (document.exitFullscreen) document.exitFullscreen().catch(function () {});
+      } else if (document.fullscreenEnabled && wrap.requestFullscreen) wrap.requestFullscreen().catch(function () {});
+      return;
+    }
     if (!screens.over.classList.contains('hidden') && performance.now() - overAt < 350) return;
     if (btn.dataset.shop) { GR.Screens.click(btn); return; }
     if (btn.dataset.setting) {
@@ -91,6 +108,8 @@
     else if (a === 'menu') GR.Game.toMenu();
     else if (a === 'settings' || a === 'shop' || a === 'missions' || a === 'achievements') GR.Game.openScreen(a);
   });
+  document.addEventListener('fullscreenchange', updateFullscreenButton);
+  updateFullscreenButton();
   renderSettings();
   const dropBtn = $('dropBtn');
   if (dropBtn) {
