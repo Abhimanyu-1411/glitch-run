@@ -75,3 +75,29 @@ body.rm .screen{animation:none!important}
   .previewbox{width:100%;max-width:240px}
   #shopList{width:100%;max-width:480px}
 }
+
+/* Public information pages and the menu's site navigation. */
+.site-links{display:flex;align-items:center;justify-content:center;gap:.65em;font-size:clamp(10px,2.2vmin,15px)}
+.site-links a,.legal-nav a{color:#0ff;text-underline-offset:.2em}
+.site-links a:hover,.legal-nav a:hover{color:#ff0}
+.site-links a:focus-visible,.legal-nav a:focus-visible{outline:2px solid #ff0;outline-offset:3px}
+body.info-page{height:auto;min-height:100%;overflow:auto;display:block;background:#05050f}
+html.info-document{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
+.info-shell{width:min(100% - 2rem,900px);margin:0 auto;padding:clamp(1.25rem,5vw,3rem) 0}
+.info-header,.info-content,.info-footer{border:1px solid #0ff5;background:rgba(5,5,20,.88);box-shadow:0 0 18px #0ff2;padding:clamp(1rem,4vw,2rem)}
+.info-header{border-bottom:0}
+.info-content{line-height:1.7;overflow-wrap:anywhere}
+.info-footer{border-top:0}
+.info-page h1,.info-page h2,.info-page h3{color:#0ff;text-shadow:0 0 9px #0ff8;letter-spacing:.08em;line-height:1.3}
+.info-page h1{font-size:clamp(1.7rem,6vw,2.7rem)}
+.info-page h2{font-size:clamp(1.2rem,4vw,1.65rem);margin:1.6em 0 .45em}
+.info-page h3{font-size:1.05rem;margin:1.15em 0 .25em}
+.info-page p,.info-page li{font-size:clamp(.95rem,2.5vw,1.05rem)}
+.info-page p+p{margin-top:.8em}
+.info-page ul{padding-left:1.4em;margin:.45em 0}
+.info-page a{color:#7ff;text-underline-offset:.2em}
+.info-page a:hover{color:#ff0}
+.legal-nav{display:flex;flex-wrap:wrap;gap:.5rem 1.2rem;margin-top:1rem}
+.info-footer p{font-size:.9rem;opacity:.85}
+.info-page :focus-visible{outline:2px solid #ff0;outline-offset:3px}
+@media(max-width:520px){.info-shell{width:min(100% - 1rem,900px);padding:1rem 0}.info-header,.info-content,.info-footer{padding:1rem}}
